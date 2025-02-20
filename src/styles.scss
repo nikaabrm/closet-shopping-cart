@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+// helpers
+.h-60px {
+  height: 60px;
+}
+.line-h-normal{
+    line-height: normal;
+}
+.border-left{
+    border-left: 1px solid gray;
+
+}
+
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+.header {
+  button {
+    span {
+        border-left: 1px solid gray;
+    }
+  }
+}
+.main-banner{
+    height: 600px;
+    background-image: url('https://plus.unsplash.com/premium_photo-1664202526559-e21e9c0fb46a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .banner-text-wrapper{
+        background-color: rgba($color: white, $alpha: 0.8);
+        border-radius: 20px;
+        width: 600px;
+        height: 400px;
+        i{
+            font-size: 60px;
+        }
+    }
+}
