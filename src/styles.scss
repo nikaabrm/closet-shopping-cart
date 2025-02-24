@@ -1,16 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+// imports
+
 // helpers
 .h-60px {
   height: 60px;
 }
-.line-h-normal{
-    line-height: normal;
+.line-h-normal {
+  line-height: normal;
 }
-.border-left{
-    border-left: 1px solid gray;
-
+.border-left {
+  border-left: 1px solid gray;
 }
-
 
 html,
 body {
@@ -21,23 +21,90 @@ body {
 .header {
   button {
     span {
-        border-left: 1px solid gray;
+      border-left: 1px solid gray;
     }
   }
 }
-.main-banner{
-    height: 600px;
-    background-image: url('https://plus.unsplash.com/premium_photo-1664202526559-e21e9c0fb46a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    .banner-text-wrapper{
-        background-color: rgba($color: white, $alpha: 0.8);
-        border-radius: 20px;
-        width: 600px;
-        height: 400px;
-        i{
-            font-size: 60px;
-        }
+.main-banner {
+  height: 600px;
+  background-image: url("https://plus.unsplash.com/premium_photo-1664202526559-e21e9c0fb46a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .banner-text-wrapper {
+    background-color: rgba($color: white, $alpha: 0.8);
+    border-radius: 20px;
+    width: 600px;
+    height: 400px;
+    i {
+      font-size: 60px;
     }
+  }
+}
+
+.owl-carousel {
+  display: flex !important;
+  align-items: center;
+  .owl-carousel-o {
+    height: 200px; /* Set a fixed height for the carousel */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide any parts of the images that exceed the container's height */
+  }
+
+  .owl-carousel-o img {
+    max-height: 100%; /* Set the maximum image height to 100% of the carousel's height */
+    max-width: 100%; /* Set the maximum image width to 100% of the carousel's width */
+    height: auto; /* Allow the image's height to adjust to its original aspect ratio */
+    width: auto; /* Allow the image's width to adjust to its original aspect ratio */
+  }
+  .owl-stage {
+    display: flex;
+  }
+  .slide img {
+    width: 200px;
+  }
+  .owl-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    padding: 30px;
+    margin-top: -15px !important;
+
+    .owl-prev,
+    .owl-next {
+      background-color: white !important;
+      padding: 50px;
+      border: 1px solid gray;
+      border-radius: 50% !important;
+      width: 40px;
+      height: 40px;
+      box-shadow:1px 1px 3px gray ;
+    }
+ 
+  }
+
+
+  .slide {
+    .bg {
+      width: 200px;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+    .text {
+      z-index: 10;
+    }
+  }
+}
+
+.countdown-banner {
+  width: 80%;
+  height: 500px;
+  background-image: url("https://www.azzurrasport.eu/pub/media/wysiwyg/azzurrasport/vle-europa.jpg");
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
 }
