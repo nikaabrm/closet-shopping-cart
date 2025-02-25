@@ -11,6 +11,9 @@
 .border-left {
   border-left: 1px solid gray;
 }
+.fs-7 {
+  font-size: 0.75rem !important;
+}
 
 html,
 body {
@@ -81,11 +84,9 @@ body {
       border-radius: 50% !important;
       width: 40px;
       height: 40px;
-      box-shadow:1px 1px 3px gray ;
+      box-shadow: 1px 1px 3px gray;
     }
- 
   }
-
 
   .slide {
     .bg {
@@ -100,11 +101,68 @@ body {
   }
 }
 
-.countdown-banner {
+.sprint-collections {
   width: 80%;
+  margin: 0 auto;
   height: 500px;
-  background-image: url("https://www.azzurrasport.eu/pub/media/wysiwyg/azzurrasport/vle-europa.jpg");
-  background-position: center;
+  background-image: url("https://assets.vogue.com/photos/5b91675158e0c42dc851bf29/master/w_1280%2Cc_limit/00001-warm-collection-spring-2019-ready-to-wear.jpg");
+  background-position: center 10%;
   background-size: cover;
   border-radius: 20px;
+  .banner-countdown {
+    background: rgb(75 68 68 / 13%);
+    border-radius: 20px;
+    box-shadow: 0px 0px 17px #c4cacd;
+  }
+}
+
+.highlight-banners {
+
+
+
+
+  .shoes {
+    height: 400px;
+    background-image: url("https://bhsh.widen.net/content/kh6jcdukqg/jpeg/BR0013416-017.jpg?w=400&h=400&quality=80&keep=s&crop=no");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .intro-text {
+      background: rgba(81, 81, 81, 0.5);
+      backdrop-filter: blur(10px);
+    }
+  }
+  .styles {
+    height: 400px;
+    background-image: url("https://shopatdawn.com/cdn/shop/files/beryll-cashmere-sweater-carole-397281_1024x1024_d2ca3d0b-7444-44e7-9d7e-8c9d826e6c52.webp?v=1722545723&width=683");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .intro-text {
+      background: rgba(81, 81, 81, 0.5);
+      backdrop-filter: blur(10px);
+    }
+  }
+  .new {
+    height: 400px;
+    background-image: url("https://m.media-amazon.com/images/I/61jLqLYY2wL._AC_UY1000_.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .intro-text {
+      background: rgba(81, 81, 81, 0.5);
+      backdrop-filter: blur(10px);
+    }
+  }
+  .exclusive {
+    height: 400px;
+    background-image: url("https://di2ponv0v5otw.cloudfront.net/posts/2024/11/11/6732536e01464875e5d950ad/m_6732543f47c130be355ae3bc.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .intro-text {
+      background: rgba(81, 81, 81, 0.5);
+      backdrop-filter: blur(10px);
+    }
+  }
 }

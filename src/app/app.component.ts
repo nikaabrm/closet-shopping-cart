@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Component } from '@angular/core';
 
 export interface PhotosApi {
   albumId?: number;
@@ -16,10 +15,11 @@ export interface PhotosApi {
   standalone: false,
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   title = 'closet-shopping-cart';
 
   constructor(private readonly http: HttpClient) {}
 
-  ngOnInit() {}
+
+ 
 }
