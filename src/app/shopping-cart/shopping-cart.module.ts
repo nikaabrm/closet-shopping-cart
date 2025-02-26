@@ -5,6 +5,8 @@ import { HeaderComponent } from './header/header.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HighlightsComponent } from './highlights/highlights.component';
+import { SpringCollectionsComponent } from './spring-collections/spring-collections.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -12,7 +14,9 @@ import { HighlightsComponent } from './highlights/highlights.component';
   declarations: [
     ShoppingCartComponent,
     HeaderComponent,
-    HighlightsComponent
+    HighlightsComponent,
+    SpringCollectionsComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
