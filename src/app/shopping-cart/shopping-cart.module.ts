@@ -7,7 +7,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HighlightsComponent } from './highlights/highlights.component';
 import { SpringCollectionsComponent } from './spring-collections/spring-collections.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { ProductsListComponent } from './products-list/products-list.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -16,15 +17,19 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     HighlightsComponent,
     SpringCollectionsComponent,
-    FooterComponent
+    FooterComponent,
+    ProductsListComponent
   ],
   imports: [
     CommonModule,
     CategoriesComponent,
-    CarouselModule
+    CarouselModule,
+    RouterModule
   ],
   exports: [
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class ShoppingCartModule { }
