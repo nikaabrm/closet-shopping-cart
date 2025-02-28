@@ -1,17 +1,33 @@
-
-<div class="container py-5 flex-grow-1 d-flex justify-content-between">
-<div class="d-flex flex-column">
-    <span>PRICES</span>
-    <div class="">Range</div>
-    <div class="Categories">
-        <div class="">item 1</div>
-        <div class="">item 2</div>
-        <div class="">item 3</div>
-
+<div class="container py-5 flex-grow-1 d-flex">
+  <form
+    [formGroup]="productsFilterForm"
+    class="d-flex flex-column col-4 bg-light p-3"
+  >
+    <span class="pb-2 fs-5">PRICES</span>
+    <div class="d-flex align-items-center justify-content-between pb-3">
+      <span class="fs-6">Range</span>
+      <span>{{ minPrice }}₾ - {{ maxPrice }}₾</span>
     </div>
-    
-</div>
+    <ngx-slider
+      [(value)]="minPrice"
+      [(highValue)]="maxPrice"
+      [options]="options"
+      (userChangeEnd)="SliderValueChanged($event)"
+    ></ngx-slider>
+    <div class="pt-5 d-flex flex-column" formArrayName="categories">
+      <div class="pb-4">Categories</div>
+     
+        @for (category of categoryNames; track $index) {
+      <mat-checkbox
+        [(indeterminate)]="indeterminate"
+        [formControlName]="$index"
+      >
+        {{ category }}
+      </mat-checkbox>
+      }
+   
+    </div>
+  </form>
 
-<div class="Prices">Items</div>
-
+  <div class="Prices col-8">Items</div>
 </div>

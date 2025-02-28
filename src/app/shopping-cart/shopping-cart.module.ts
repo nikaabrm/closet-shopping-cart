@@ -9,7 +9,10 @@ import { SpringCollectionsComponent } from './spring-collections/spring-collecti
 import { FooterComponent } from './footer/footer.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { RouterModule } from '@angular/router';
-
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import {FormsModule} from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,11 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     CategoriesComponent,
     CarouselModule,
-    RouterModule
+    RouterModule,
+    NgxSliderModule,
+    FormsModule,
+    MatCheckboxModule,
+    ReactiveFormsModule
   ],
   exports: [
     ShoppingCartComponent,
