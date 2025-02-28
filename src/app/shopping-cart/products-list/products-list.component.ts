@@ -60,7 +60,7 @@ export class ProductsListComponent {
 
     setTimeout(() => {
       
-      console.log(this.productsFilterForm,this.productsFilterForm?.get('categories')); aqedan
+      console.log(this.productsFilterForm,this.productsFilterForm?.get('categories')); aqedan iq templateshi controlebia vigo
     }, 1500);
 
   }
