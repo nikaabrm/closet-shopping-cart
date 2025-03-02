@@ -7,6 +7,7 @@ import {
   FormControl,
   Validators,
   FormArray,
+  AbstractControl,
 } from '@angular/forms';
 @Component({
   selector: 'app-products-list',
@@ -16,7 +17,8 @@ import {
 })
 export class ProductsListComponent {
   productsFilterForm!: FormGroup;
-  categoryNames: string[] = [];
+  categoriesFormGroupControls: any[] = [];
+
   isReady = false;
   minPrice: number = 20;
   maxPrice: number = 120;
@@ -26,8 +28,6 @@ export class ProductsListComponent {
     ceil: 300,
   };
 
-  readonly indeterminate = model(false);
-
   constructor(
     private categoriesService: CategoriesService,
     private fb: FormBuilder
@@ -35,34 +35,21 @@ export class ProductsListComponent {
     this.productsFilterForm = this.fb.group({
       priceMin: ['', Validators.required],
       priceMax: ['', Validators.required],
-      categories: this.fb.array([]),
+      categories: this.fb.group({}),
     });
 
     this.categoriesService.getAllCategories().subscribe((res) => {
-      const categoriesFormArr = this.productsFilterForm.get(
+      const categoriesFormGroup = this.productsFilterForm.get(
         'categories'
-      ) as FormArray;
-
-      this.categoryNames = res;
+      ) as FormGroup;
 
       res.forEach((item, i) => {
-        categoriesFormArr.push(new FormControl(item));
+        categoriesFormGroup.addControl(item, new FormControl(''));
       });
-
-      // categoriesArr.push(
-      //   this.fb.group({
-      //     street: ['', Validators.required],
-      //     city: ['', Validators.required],
-      //     zip: ['', [Validators.required, Validators.minLength(5)]],
-      //   })
-      // )
+      this.categoriesFormGroupControls = Object.keys(
+        categoriesFormGroup.controls
+      );
     });
-
-    setTimeout(() => {
-      
-      console.log(this.productsFilterForm,this.productsFilterForm?.get('categories')); aqedan iq templateshi controlebia vigo
-    }, 1500);
-
   }
 
   SliderValueChanged(event: any) {
@@ -70,12 +57,10 @@ export class ProductsListComponent {
     this.maxPrice = event.highValue;
     this.productsFilterForm.controls['priceMin'].setValue(this.minPrice);
     this.productsFilterForm.controls['priceMax'].setValue(this.maxPrice);
+    console.log(this.productsFilterForm.value);
 
-    console.log(
-      event,
-      this.minPrice,
-      this.maxPrice,
-      this.productsFilterForm.value
-    );
+  }
+  matCheckboxChanged(event: any) {
+    console.log(this.productsFilterForm.value);
   }
 }

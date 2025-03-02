@@ -16,16 +16,22 @@
     ></ngx-slider>
     <div class="pt-5 d-flex flex-column" formArrayName="categories">
       <div class="pb-4">Categories</div>
-     
-        @for (category of categoryNames; track $index) {
-      <mat-checkbox
-        [(indeterminate)]="indeterminate"
-        [formControlName]="$index"
-      >
-        {{ category }}
-      </mat-checkbox>
+
+      @if (categoriesFormGroupControls.length > 2) {
+        @for (category of categoriesFormGroupControls; track $index) {
+            <mat-checkbox
+              (change)="matCheckboxChanged($event)"
+              [formControlName]="category"
+            >
+              {{category}}
+            </mat-checkbox>
+            }
+
       }
-   
+
+
+
+
     </div>
   </form>
 
