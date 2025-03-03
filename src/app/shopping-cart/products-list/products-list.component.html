@@ -17,45 +17,61 @@
     <div class="pt-5 d-flex flex-column" formArrayName="categories">
       <div class="pb-4">Categories</div>
 
-      @if (categoriesFormGroupControls.length > 2) {
-        @for (category of categoriesFormGroupControls; track $index) {
-            <mat-checkbox
-              (change)="matCheckboxChanged($event)"
-              [formControlName]="category"
-            >
-              {{category}}
-            </mat-checkbox>
-            }
-
-      }
-
-
-
-
+      @if (categoriesFormGroupControls.length > 2) { @for (category of
+      categoriesFormGroupControls; track $index) {
+      <mat-checkbox
+        (change)="matCheckboxChanged($event)"
+        [formControlName]="category"
+      >
+        {{ category }}
+      </mat-checkbox>
+      } }
     </div>
   </form>
 
   <div class="Prices col-7 d-flex justify-content-end flex-column">
-    <div class="d-flex">
+    <div class="d-flex px-4">
       <mat-form-field>
-        <mat-label>Favorite food</mat-label>
+        <mat-label>Sort By</mat-label>
         <mat-select>
           @for (food of foods; track food) {
-            <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+          <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
-
     </div>
 
     <div class="d-flex flex-grow-1 w-100 flex-wrap">
-      <div class="item col-4">item</div>
-      <div class="item col-4">item</div>
-      <div class="item col-4">item</div>
-      <div class="item col-4">item</div>
-
-      
+      <div class="product-item col-4 px-4">
+        <div class="favorite">
+          <i class="bi bi-heart"></i>
+          <i class="bi bi-heart-full"></i>
+        </div>
+        <div class="bg"></div>
+        <div class="border w-100 p-3">
+          <div class="fs-7">
+            descriptio ndescriptiondescriptio ndescriptiondescriptio
+            ndescriptiondescriptio ndescriptiondescriptio ndescriptiondescriptio
+            ndescriptions
+          </div>
+          <div class="">price</div>
+        </div>
+      </div>
+      <div class="product-item col-4 px-4">
+        <div class="favorite">
+          <i class="bi bi-heart"></i>
+          <i class="bi bi-heart-fill"></i>
+        </div>
+        <div class="bg"></div>
+        <div class="border w-100 p-3">
+          <div class="fs-7">
+            descriptio ndescriptiondescriptio ndescriptiondescriptio
+            ndescriptiondescriptio ndescriptiondescriptio ndescriptiondescriptio
+            ndescriptions
+          </div>
+          <div class="">price</div>
+        </div>
+      </div>
     </div>
-    
   </div>
 </div>
