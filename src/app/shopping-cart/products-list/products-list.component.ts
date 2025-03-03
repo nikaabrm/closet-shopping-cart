@@ -9,6 +9,11 @@ import {
   FormArray,
   AbstractControl,
 } from '@angular/forms';
+
+interface Food {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-products-list',
   standalone: false,
@@ -63,4 +68,11 @@ export class ProductsListComponent {
   matCheckboxChanged(event: any) {
     console.log(this.productsFilterForm.value);
   }
+
+
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
 }
