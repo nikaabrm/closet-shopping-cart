@@ -172,40 +172,19 @@ export class ProductsListComponent {
 
   matCheckboxChanged(event: any) {
     this.filteredProducts  = [];
+
     const chosenCategoryNames = Object.entries(this.productsFilterForm.value.categories)
     .filter(([key, value]) => value)
     .map(([key]) => key);
 
-    console.log('maqvs kategoriis saxelebi', chosenCategoryNames)
-
-    // roca arcerti kategoria agar maqvs
-    if(chosenCategoryNames.length === 0){
-      this.filteredProducts  = [];
-    }
-
-
-    // roca erti kategoria ukve maqvs da emtxveva romelime 
 
     chosenCategoryNames.forEach((name) => {
       this.products.filter((item) => item.category === name).map(
         item => {
-
-          if(this.filteredProducts.find(myItem => myItem === item)){
-            
-      
-            console.log('es item maqvs', item)
-
-          } else {
-
             this.filteredProducts.push(item);
-          }
-
         }
       );
     });
-
- 
-    console.log('this.filteredProducts',this.filteredProducts)
 
     this.updatePagination();
   }
