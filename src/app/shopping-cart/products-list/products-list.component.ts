@@ -106,7 +106,6 @@ export class ProductsListComponent {
 
     this.productsListService.getAllProducts().subscribe((res) => {
       this.products = res; // Assuming API returns an array of 20 items
-      console.log(this.products);
       this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
 
       this.updatePagination();
@@ -172,42 +171,41 @@ export class ProductsListComponent {
 
 
   matCheckboxChanged(event: any) {
-    const chosenCategoryNames = Object.entries(
-      this.productsFilterForm.value.categories
-    )
-      .filter(([key, value]) => value)
-      .map(([key]) => key);
+    this.filteredProducts  = [];
+    const chosenCategoryNames = Object.entries(this.productsFilterForm.value.categories)
+    .filter(([key, value]) => value)
+    .map(([key]) => key);
+
+    console.log('maqvs kategoriis saxelebi', chosenCategoryNames)
+
+    // roca arcerti kategoria agar maqvs
+    if(chosenCategoryNames.length === 0){
+      this.filteredProducts  = [];
+    }
 
 
-
-    
-    let fileterProductsLocally: any[] = [];
-
-
-
+    // roca erti kategoria ukve maqvs da emtxveva romelime 
 
     chosenCategoryNames.forEach((name) => {
-      this.chosenCategorieItems = this.products.filter(
-        (item) => item.category === name
+      this.products.filter((item) => item.category === name).map(
+        item => {
+
+          if(this.filteredProducts.find(myItem => myItem === item)){
+            
+      
+            console.log('es item maqvs', item)
+
+          } else {
+
+            this.filteredProducts.push(item);
+          }
+
+        }
       );
     });
 
-    this.chosenCategorieItems.forEach((item) => {
-      if (this.filteredProducts.find((myItem) => myItem === item)) {
-
-        console.log('gvaqvs es', item);
-
-      } else {
-
-        this.filteredProducts.push(item);
-
-        console.log('ar gvaqvs es ', item);
-      }
-    });
-
-    console.log('this.filteredProducts', this.filteredProducts);
-    console.log('this.chosenCategorieItems', this.chosenCategorieItems);
-
+ 
+    console.log('this.filteredProducts',this.filteredProducts)
 
     this.updatePagination();
   }
