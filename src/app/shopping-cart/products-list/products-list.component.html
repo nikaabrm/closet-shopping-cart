@@ -8,7 +8,7 @@
     <span class="pb-2 fs-5">PRICES</span>
     <div class="d-flex align-items-center justify-content-between pb-3">
       <span class="fs-6">Range</span>
-      <span>{{ minPrice }}₾ - {{ maxPrice }}₾</span>
+      <span>{{ minPrice }}$ - {{ maxPrice }}$</span>
     </div>
     <ngx-slider
       [(value)]="minPrice"
@@ -22,7 +22,7 @@
       @if (categoriesFormGroupControls.length > 2) { @for (category of
       categoriesFormGroupControls; track $index) {
       <mat-checkbox
-        (change)="matCheckboxChanged($event)"
+        (change)="filterByCategory($event)"
         [formControlName]="category"
       >
         {{ category }}
@@ -50,7 +50,7 @@
           <i class="bi bi-heart" *ngIf="isFavorite"></i>
           <i class="bi bi-heart-fill" *ngIf="!isFavorite"></i>
         </button>
-        <div class="bg"     [ngStyle]="{'background-image': 'url(' + item.image + ')'}"    ></div>
+        <div class="bg" [ngStyle]="{'background-image': 'url(' + item.image + ')'}"></div>
         <div class="border w-100 p-3">
           <div class="fs-7 truncate-2">
             {{ item.description }}
@@ -58,14 +58,13 @@
           <div class="d-flex justify-content-between pt-2 pb-3">
             <span>${{item.price}}</span>
             <span>{{item.rating.count}} Orders</span>
-          
           </div> 
         </div>
       </div>
       }
     </div>
 
-    <div class="">
+    <div class="w-100">
       <mat-paginator
         [length]="paginatorItemsLength"
         [pageSize]="itemsPerPage"

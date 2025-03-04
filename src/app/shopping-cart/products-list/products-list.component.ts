@@ -42,7 +42,17 @@ export class ProductsListComponent {
     title: string;
   }[] = [];
 
-   chosenCategorieItems: {
+  filteredProductsByCategory: {
+    category: string;
+    description: string;
+    id: number;
+    image: string;
+    price: number;
+    rating: { rate: number; count: number };
+    title: string;
+  }[] = [];
+
+  filteredProductsByRange: {
     category: string;
     description: string;
     id: number;
@@ -72,11 +82,11 @@ export class ProductsListComponent {
 
   isFavorite = false;
   minPrice: number = 0;
-  maxPrice: number = 120;
+  maxPrice: number = 1000;
 
   options: Options = {
     floor: 0,
-    ceil: 300,
+    ceil: 1000,
   };
 
   constructor(
@@ -156,49 +166,59 @@ export class ProductsListComponent {
     }
   }
 
+  filterProducts() {
+    
+
+    if (this.filteredProductsByCategory.length) {
+      this.filteredProducts = [];
+      this.filteredProductsByCategory.forEach((item) => {
+        this.filteredProducts.push(item);
+      });
+    }
+    if(this.filteredProductsByRange.length) {
+      this.filteredProducts = [];
+      this.filteredProductsByRange.forEach((item) => {
+        this.filteredProducts.push(item);
+      });
+      console.log(' aqaa fileteredByPriceRange', this.filteredProductsByRange);
+
+    }
+
+    this.updatePagination();
+  }
+
   SliderValueChanged(event: any) {
     this.minPrice = event.value;
     this.maxPrice = event.highValue;
     this.productsFilterForm.controls['priceMin'].setValue(this.minPrice);
     this.productsFilterForm.controls['priceMax'].setValue(this.maxPrice);
+ 
+    this.filteredProductsByRange = this.products.filter(item => item.price >= event.value && item.price <= event.highValue);
+
+    this.filterProducts();
+
+    
   }
 
+  filterByCategory(event: any) {
+    this.filteredProductsByCategory = [];
 
-
-
-
-
-
-
-  matCheckboxChanged(event: any) {
-    this.filteredProducts  = [];
-
-    const chosenCategoryNames = Object.entries(this.productsFilterForm.value.categories)
-    .filter(([key, value]) => value)
-    .map(([key]) => key);
-
+    const chosenCategoryNames = Object.entries(
+      this.productsFilterForm.value.categories
+    )
+      .filter(([key, value]) => value)
+      .map(([key]) => key);
 
     chosenCategoryNames.forEach((name) => {
-      this.products.filter((item) => item.category === name).map(
-        item => {
-            this.filteredProducts.push(item);
-        }
-      );
+      this.products
+        .filter((item) => item.category === name)
+        .map((item) => {
+          this.filteredProductsByCategory.push(item);
+        });
     });
 
-    this.updatePagination();
+    this.filterProducts();
   }
-
-
-
-
-
-
-
-
-
-
-
 
   Favorite() {
     this.isFavorite = !this.isFavorite;
