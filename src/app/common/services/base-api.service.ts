@@ -34,5 +34,8 @@ export class BaseApiService<T> {
 getCategories(endpoint: string) {
     return this.http.get<T[]>(`${this.apiUrl}/${endpoint}`);
   }
+  getProducts(endpoint: string) {
+    return this.http.get<T[]>(`${this.apiUrl}/${endpoint}`);
+  }
  
 }

@@ -217,15 +217,32 @@ div.mat-mdc-select-panel {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 24px;
-    right: 48px;
+    top: 14px;
+    right: 38px;
     background-color: rgba(0, 0, 0, 0.5);
     width: 50px;
     height: 50px;
     .bi{
       color: white;
       font-size: 23px;
+      &-heart-fill{
+        color: red;
+      }
     }
 
+
   }
+}
+
+.mat-mdc-paginator-page-size{
+  display: none !important;
+}
+
+.truncate-2{
+  overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+
 }

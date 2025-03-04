@@ -9,6 +9,7 @@ import {
   FormArray,
   AbstractControl,
 } from '@angular/forms';
+import { ProductsListService } from './products-list.service';
 
 @Component({
   selector: 'app-products-list',
@@ -18,10 +19,59 @@ import {
 })
 export class ProductsListComponent {
   productsFilterForm!: FormGroup;
-  categoriesFormGroupControls: any[] = [];
+  categoriesFormGroupControls: string[] = [];
+  // Original array of products
+  products: {
+    category: string;
+    description: string;
+    id: number;
+    image: string;
+    price: number;
+    rating: { rate: number; count: number };
+    title: string;
+  }[] = [];
 
-  isReady = false;
-  minPrice: number = 20;
+  // filteredProducts aq chemtvis mqodne ssul da fasis shedarebebze aq vyaro da amit mivamarto mere
+  filteredProducts: {
+    category: string;
+    description: string;
+    id: number;
+    image: string;
+    price: number;
+    rating: { rate: number; count: number };
+    title: string;
+  }[] = [];
+
+   chosenCategorieItems: {
+    category: string;
+    description: string;
+    id: number;
+    image: string;
+    price: number;
+    rating: { rate: number; count: number };
+    title: string;
+  }[] = [];
+
+  // Page products
+  // This will be generated dynamically based on page
+  paginatedProducts: {
+    category: string;
+    description: string;
+    id: number;
+    image: string;
+    price: number;
+    rating: { rate: number; count: number };
+    title: string;
+  }[] = [];
+
+  // Pagination items, wE do not supports pages
+  // And required to do with fetched data
+  itemsPerPage = 10;
+  currentPage = 1;
+  totalPages = 0;
+
+  isFavorite = false;
+  minPrice: number = 0;
   maxPrice: number = 120;
 
   options: Options = {
@@ -31,6 +81,7 @@ export class ProductsListComponent {
 
   constructor(
     private categoriesService: CategoriesService,
+    private productsListService: ProductsListService,
     private fb: FormBuilder
   ) {
     this.productsFilterForm = this.fb.group({
@@ -47,10 +98,63 @@ export class ProductsListComponent {
       res.forEach((item, i) => {
         categoriesFormGroup.addControl(item, new FormControl(''));
       });
+
       this.categoriesFormGroupControls = Object.keys(
         categoriesFormGroup.controls
       );
     });
+
+    this.productsListService.getAllProducts().subscribe((res) => {
+      this.products = res; // Assuming API returns an array of 20 items
+      console.log(this.products);
+      this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
+
+      this.updatePagination();
+    });
+  }
+
+  get paginatorItemsLength() {
+    return this.filteredProducts.length
+      ? this.filteredProducts.length
+      : this.products.length;
+  }
+
+  updatePagination() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const data = this.filteredProducts?.length
+      ? this.filteredProducts
+      : this.products;
+    this.paginatedProducts = data.slice(
+      startIndex,
+      startIndex + this.itemsPerPage
+    );
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+
+  navigateOnExactPage(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.updatePagination();
+  }
+
+  pageChanged(event: any) {
+    if (event.previousPageIndex > event.pageIndex) {
+      this.prevPage();
+    } else {
+      this.nextPage();
+    }
   }
 
   SliderValueChanged(event: any) {
@@ -58,16 +162,76 @@ export class ProductsListComponent {
     this.maxPrice = event.highValue;
     this.productsFilterForm.controls['priceMin'].setValue(this.minPrice);
     this.productsFilterForm.controls['priceMax'].setValue(this.maxPrice);
-    console.log(this.productsFilterForm.value);
-
   }
+
+
+
+
+
+
+
+
   matCheckboxChanged(event: any) {
-    console.log(this.productsFilterForm.value);
+    const chosenCategoryNames = Object.entries(
+      this.productsFilterForm.value.categories
+    )
+      .filter(([key, value]) => value)
+      .map(([key]) => key);
+
+
+
+    
+    let fileterProductsLocally: any[] = [];
+
+
+
+
+    chosenCategoryNames.forEach((name) => {
+      this.chosenCategorieItems = this.products.filter(
+        (item) => item.category === name
+      );
+    });
+
+    this.chosenCategorieItems.forEach((item) => {
+      if (this.filteredProducts.find((myItem) => myItem === item)) {
+
+        console.log('gvaqvs es', item);
+
+      } else {
+
+        this.filteredProducts.push(item);
+
+        console.log('ar gvaqvs es ', item);
+      }
+    });
+
+    console.log('this.filteredProducts', this.filteredProducts);
+    console.log('this.chosenCategorieItems', this.chosenCategorieItems);
+
+
+    this.updatePagination();
   }
 
 
-  foods: {value: string, viewValue: string}[] = [
-    {value: 'priceUp', viewValue: 'Price Up'},
-    {value: 'priceDown', viewValue: 'Price Down'},
+
+
+
+
+
+
+
+
+
+
+  Favorite() {
+    this.isFavorite = !this.isFavorite;
+  }
+
+  foods: { value: string; viewValue: string }[] = [
+    { value: 'priceUp', viewValue: 'Price Up' },
+    { value: 'priceDown', viewValue: 'Price Down' },
   ];
+
+  p: number = 1;
+  collection: any[] = ['1', '232', '23'];
 }
