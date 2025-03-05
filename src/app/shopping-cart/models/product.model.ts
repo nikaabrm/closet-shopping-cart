@@ -17,3 +17,8 @@ export interface Product{
  export interface GetProductsParams{
     sort:SortOrder
  }
+
+ export enum ProductListPageType {
+   FAVORITE='favorite',
+   PRODUCT='product'
+ }

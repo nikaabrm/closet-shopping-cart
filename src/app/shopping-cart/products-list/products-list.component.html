@@ -48,6 +48,7 @@
         <app-product-list-item
          [product]="item"
           (productClicked)="productItemClicked(item.id)"
+          (favoriteRemoved)="handleFavoriteRemoved($event)"
           ></app-product-list-item>
         </div>
       }
