@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDetailedService } from './product-detailed.service';
 import { Product } from '../models/product.model';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -21,7 +21,8 @@ export class ProductDetailedComponent {
     dots: false,
     margin: 10,
     navSpeed: 700,
- 
+    nav: true,
+    navText: ['<i class="bi bi-chevron-left fs-5 text-body-emphasis"></i>', '<i class="bi bi-chevron-right fs-5 text-body-emphasis"></i>'],
   };
 
   product: Product;
@@ -31,7 +32,8 @@ export class ProductDetailedComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productDetailedService: ProductDetailedService,
-    private productsListService: ProductsListService
+    private productsListService: ProductsListService,
+    private router: Router
   ) {
     console.log('aqaa' );
 
@@ -62,4 +64,8 @@ export class ProductDetailedComponent {
   countDecreased() {
     this.count--;
   }
+  productItemClicked(id:number){
+    this.router.navigate(['detailed',id])
+  }
+
 }
