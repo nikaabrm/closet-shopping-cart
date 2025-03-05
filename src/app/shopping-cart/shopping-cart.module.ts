@@ -23,6 +23,7 @@ import { CartComponent } from './cart/cart.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './modals/login/login.component';
+import { PricePipe } from '../common/pipes/price.pipe';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { LoginComponent } from './modals/login/login.component';
     LoginComponent,
     LoginComponent,
     CategoriesComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { LoginComponent } from './modals/login/login.component';
     MatFormFieldModule,
     MatPaginatorModule,
     MatDialogModule,
+    PricePipe
   ],
   exports: [ShoppingCartComponent, HeaderComponent, FooterComponent],
 })

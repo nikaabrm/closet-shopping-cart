@@ -49,5 +49,8 @@ export const cartReducer = createReducer(
         : item
     )
   })),
+  on(CartActions.clearCart, () => ({
+    ...initialState
+  })),
   on(AuthActions.logout, () => initialState)
 ); 

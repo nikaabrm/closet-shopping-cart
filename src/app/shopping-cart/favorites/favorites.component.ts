@@ -24,7 +24,6 @@ export class FavoritesComponent implements OnInit {
   }
 
   favoriteRemoved(itemId: number) {
-    console.log(itemId, '----');
     this.favoritedProductIds = this.favoritedProductIds.filter(
       (productId) => productId !== itemId
     );

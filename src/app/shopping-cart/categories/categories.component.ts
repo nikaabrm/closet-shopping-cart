@@ -46,7 +46,6 @@ export class CategoriesComponent {
 
   constructor(private categoriesService: CategoriesService, private router: Router) {
     this.categoriesService.getAllCategories().subscribe((res) => {
-      console.log(this.categories.length)
       this.categoryNames = res;
       this.categoryNames.forEach((el, i) => {
         this.categories!.push({name: el, photoUrl: this.categoryPhotos[i] });
@@ -54,7 +53,9 @@ export class CategoriesComponent {
     });
   }
   
-  categoryClicked(category: string){
-    this.router.navigate(['products',category])
+  navigateToProducts(categoryName: string) {
+    this.router.navigate(['/products'], {
+      queryParams: { category: categoryName }
+    });
   }
 }

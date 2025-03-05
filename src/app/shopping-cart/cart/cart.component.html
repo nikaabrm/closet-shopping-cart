@@ -5,7 +5,7 @@
             </div>
             <div class="px-4 col-2 fs-5 text-info-emphasis d-flex flex-column align-items-center">
                 <span class="pb-4">{{item.product.title}}</span>
-                <span>${{item.product.price}}</span>
+                <span>{{item.product.price | price}}</span>
             </div>
             <div class="col-6 pt-3 d-flex flex-column text-info-emphasis">
                 <span class="pb-4">Quantity</span>
@@ -17,15 +17,18 @@
                 <button class="btn btn-danger mt-3" (click)="removeFromCart(item.product.id)">Remove</button>
             </div>
             <div class="col-2 text-end">
-                <span class="fs-5">${{item.product.price * item.quantity}}</span>
+                <span class="fs-5">{{item.product.price * item.quantity | price}}</span>
             </div>
         </div>
 
         <div class="d-flex justify-content-between pt-4" *ngIf="cartItems.length > 0">
             <div class="fs-4 text-info-emphasis">
-                <span>Total:</span> <span class="px-3">${{cartTotal$ | async}}</span>
+                <span>Total:</span> <span class="px-3">{{(cartTotal$ | async) | price}}</span>
             </div>
+            <div>
+            <button class="btn btn-danger text-white px-4 me-2" (click)="clearCart()">Clear Cart</button>
             <button class="btn btn-secondary text-white px-5">Check Out</button>
+            </div>
         </div>
 
         <div *ngIf="cartItems.length === 0" class="text-center py-5">

@@ -17,10 +17,14 @@
       <div class="pb-4">Categories</div>
 
       @for (category of availableCategories; track $index) {
-      <mat-checkbox (change)="categoriesChanged(category)" [value]="category">
-        {{ category }}
-      </mat-checkbox>
-      }
+        <mat-checkbox
+          [checked]="selectedCategories.includes(category)"
+          (change)="categoriesChanged($event,category)"
+        >
+          {{ category }}
+        </mat-checkbox>
+        } 
+
     </div>
   </form>
 

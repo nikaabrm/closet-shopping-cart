@@ -2,10 +2,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { ChangeContext, Options } from '@angular-slider/ngx-slider';
+import {  Options } from '@angular-slider/ngx-slider';
 import { CategoriesService } from '../categories/categories.service';
 import { ProductsListService } from './products-list.service';
 import {
@@ -17,6 +18,7 @@ import {
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-products-list',
@@ -24,11 +26,19 @@ import { MatSelectChange } from '@angular/material/select';
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss',
 })
-export class ProductsListComponent {
-  @Input() set favoritedItemIds(ids: number[]) {
-    this.filteredProducts = null;
-    this.paginatedProducts = [];
-    this.loadProducts(undefined, ids);
+export class ProductsListComponent implements OnInit {
+  private _favoritedItemIds: number[] = [];
+  
+  @Input() set favoritedItemIds(ids: number[] | undefined) {
+    if (ids) {
+      this._favoritedItemIds = ids;
+      if (this.pageType === ProductListPageType.FAVORITE) {
+        this.loadProducts(undefined, ids);
+      }
+    }
+  }
+  get favoritedItemIds(): number[] {
+    return this._favoritedItemIds;
   }
 
   @Input() pageType: ProductListPageType = ProductListPageType.PRODUCT;
@@ -41,17 +51,10 @@ export class ProductsListComponent {
     { value: 'desc', viewValue: 'Price Down' },
   ];
 
-  // Original array of products
   products: Product[] = [];
-
   filteredProducts: Product[] | null = null;
-
-  // Page products
-  // This will be generated dynamically based on page
   paginatedProducts: Product[] = [];
 
-  // Pagination items, we do not supports pages
-  // And required to do with fetched data
   itemsPerPage = 10;
   currentPage = 1;
   totalPages = 0;
@@ -70,24 +73,36 @@ export class ProductsListComponent {
     private categoriesService: CategoriesService,
     private productsListService: ProductsListService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
-    this.categoriesService.getAllCategories().subscribe((res) => {
-      this.availableCategories = res;
-    });
+  
+  }
 
-    this.activatedRoute.params.subscribe((res) => {
-      setTimeout(() => {
-        if (
-          res['category'] &&
-          this.availableCategories.includes(res['category'])
-        ) {
-          this.categoriesChanged(res['category']);
+  ngOnInit() {
+    // First get the categories
+    this.categoriesService.getAllCategories().subscribe(categories => {
+      this.availableCategories = categories;
+
+      // Then check URL parameters and initialize selected categories
+      this.route.queryParams.subscribe(params => {
+        const categoryParam = params['category'];
+        if (categoryParam) {
+          // Split the category parameter by comma to get all selected categories
+          const categories = categoryParam.split(',');
+          // Only include categories that exist in availableCategories
+          this.selectedCategories = categories.filter((cat: string) => this.availableCategories.includes(cat));
+        } else {
+          this.selectedCategories = [];
         }
-      }, 300);
+        
+        // Load products with current favorite IDs if on favorites page
+        if (this.pageType === ProductListPageType.FAVORITE) {
+          this.loadProducts(undefined, this.favoritedItemIds);
+        } else {
+          this.loadProducts();
+        }
+      });
     });
-
-    this.loadProducts();
   }
 
   get paginatorItemsLength() {
@@ -114,7 +129,6 @@ export class ProductsListComponent {
   }
 
   sortChanged(event: MatSelectChange) {
-    console.log(event)
     const sortOrder = event.value as SortOrder;
     this.loadProducts({ sort: sortOrder });
   }
@@ -168,23 +182,33 @@ export class ProductsListComponent {
   }
 
   priceValuesChanged(event:{value: number; highValue?: number }) {
-    console.log(event);
     this.minPrice = event.value!;
     this.maxPrice = event.highValue!;
     this.filterProducts();
   }
 
-  categoriesChanged(categoryName: string) {
-    const categoryItem = this.selectedCategories.find(
-      (category) => category === categoryName
-    );
+  categoriesChanged(event: MatCheckboxChange,categoryName:string){
+    console.log(event);
 
-    if (categoryItem) {
-      const categoryIndex = this.selectedCategories.indexOf(categoryName);
-      this.selectedCategories.splice(categoryIndex, 1);
+    const categoryIndex = this.selectedCategories.indexOf(categoryName);
+    
+    if (categoryIndex > -1) {
+      if (!event.checked) {
+        this.selectedCategories.splice(categoryIndex, 1);
+      }
     } else {
-      this.selectedCategories.push(categoryName);
+      if (event.checked) {
+        this.selectedCategories.push(categoryName);
+      }
     }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        category: this.selectedCategories.length ? this.selectedCategories.join(',') : null
+      },
+      queryParamsHandling: 'merge'
+    });
 
     this.filterProducts();
   }

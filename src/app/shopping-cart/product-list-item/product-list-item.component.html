@@ -12,7 +12,7 @@
       {{ product.description }}
     </div>
     <div class="d-flex justify-content-between pt-2 pb-3">
-      <span>${{ product.price }}</span>
+      <span>{{ product.price | price }}</span>
       <span>{{ product.rating.count }} Orders</span>
     </div>
   </div>

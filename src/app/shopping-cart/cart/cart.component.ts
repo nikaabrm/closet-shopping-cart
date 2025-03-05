@@ -31,4 +31,9 @@ export class CartComponent {
   removeFromCart(productId: number) {
     this.store.dispatch(CartActions.removeFromCart({ productId }));
   }
+
+  clearCart() {
+    this.store.dispatch(CartActions.clearCart());
+  }
+
 }

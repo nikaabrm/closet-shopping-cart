@@ -20,3 +20,5 @@ export const updateQuantity = createAction(
   '[Cart] Update Quantity',
   props<{ productId: number; quantity: number }>()
 ); 
+
+export const clearCart = createAction('[Cart] Clear Cart'); 

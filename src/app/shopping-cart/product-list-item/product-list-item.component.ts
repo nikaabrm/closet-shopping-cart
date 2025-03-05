@@ -7,44 +7,49 @@ import { FAVORITE_STORAGE_KEY } from '../../common/constants/localstorage.consta
   selector: 'app-product-list-item',
   standalone: false,
   templateUrl: './product-list-item.component.html',
-  styleUrl: './product-list-item.component.scss',
+  styleUrl: './product-list-item.component.scss'
 })
 export class ProductListItemComponent implements OnInit {
-  constructor(private readonly localsTorageService: LocalStorageService) {}
+  constructor(private readonly localStorageService: LocalStorageService) {}
 
   @Input() product: Product;
   @Output() productClicked = new EventEmitter();
   @Output() favoriteRemoved = new EventEmitter<number>();
 
   isFavorite = false;
-  favoritedProducts: number[] | null = [];
+  favoritedProducts: number[] = [];
 
   ngOnInit(): void {
-    this.favoritedProducts = this.localsTorageService.get(FAVORITE_STORAGE_KEY);
-    this.isFavorite =
-      this.favoritedProducts?.includes(this.product.id) || false;
+    this.loadFavorites();
   }
+
+  loadFavorites() {
+    const storedFavorites = this.localStorageService.get(FAVORITE_STORAGE_KEY);
+    this.favoritedProducts = Array.isArray(storedFavorites) ? storedFavorites : [];
+    this.isFavorite = this.favoritedProducts.includes(this.product.id);
+  }
+
   toggleFavorite() {
-    let modifiedFavoriteProducts: number[] = [
-      ...(this.favoritedProducts || []),
-    ];
+    // Get the current favorites from localStorage to ensure we have the latest data
+    const storedFavorites = this.localStorageService.get(FAVORITE_STORAGE_KEY);
+    const currentFavorites = Array.isArray(storedFavorites) ? storedFavorites : [];
+    
     if (this.isFavorite) {
-      const favoriteIndex = modifiedFavoriteProducts.indexOf(this.product.id);
-      modifiedFavoriteProducts.splice(favoriteIndex, 1);
+      // Remove from favorites
+      const updatedFavorites = currentFavorites.filter((id: number) => id !== this.product.id);
+      this.localStorageService.set(FAVORITE_STORAGE_KEY, updatedFavorites);
       this.favoriteRemoved.emit(this.product.id);
     } else {
-      modifiedFavoriteProducts.push(this.product.id);
+      // Add to favorites
+      const updatedFavorites = [...currentFavorites, this.product.id];
+      this.localStorageService.set(FAVORITE_STORAGE_KEY, updatedFavorites);
     }
 
-    this.favoritedProducts = modifiedFavoriteProducts;
-    this.isFavorite =
-      this.favoritedProducts?.includes(this.product.id) || false;
-
-    this.localsTorageService.set(
-      FAVORITE_STORAGE_KEY,
-      modifiedFavoriteProducts
-    );
+    // Update local state
+    this.isFavorite = !this.isFavorite;
+    this.loadFavorites();
   }
+
   onProductClicked() {
     this.productClicked.emit();
   }

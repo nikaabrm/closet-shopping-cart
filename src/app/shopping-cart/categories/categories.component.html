@@ -6,7 +6,7 @@
       @for(category of categories; track $index){
 
       <ng-template carouselSlide>
-        <div class="slide d-flex flex-column align-items-center cursor-pointer" (click)="categoryClicked(category.name)">
+        <div class="slide d-flex flex-column align-items-center cursor-pointer" (click)="navigateToProducts(category.name)">
           <div
             class="bg bg-size-cove bg-cover bg-position-center bg-center"
             [style.background-image]="'url(' + category.photoUrl + ')'"

@@ -1,59 +1,123 @@
-# ClosetShoppingCart
+# 🛍️ Closet - Modern Shopping Cart Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.4.
+<div align="center">
+  <p><em>A sleek and modern e-commerce experience built with Angular</em></p>
+</div>
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+- 🛒 **Smart Shopping Cart**
+  - Real-time cart updates
+  - Quantity management
+  - Bulk clear cart functionality
+  - Price calculations with custom formatting
+  
+- 💫 **Product Management**
+  - Detailed product views
+  - Dynamic image galleries
+  - Price filtering
+  - Category-based navigation
+  
+- ❤️ **User Experience**
+  - Favorites system
+  - Toast notifications
+  - Responsive design
+  - Bootstrap-based UI
+  
+- 🔐 **Authentication**
+  - User login/logout
+  - Persistent sessions
+  - Secure state management
 
+## 🚀 Tech Stack
+
+- **Framework**: Angular 19
+- **State Management**: NgRx
+- **UI Components**: 
+  - Angular Material
+  - Bootstrap 5
+  - NGX Toastr
+- **Styling**: SCSS
+- **Animations**: NGX Owl Carousel
+- **Other Libraries**:
+  - NGX Slider
+  - Angular Router
+
+## 📦 Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/closet-shopping-cart.git
+```
+
+2. Install dependencies:
+```bash
+cd closet-shopping-cart
+npm install
+```
+
+3. Start the development server:
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+4. Open your browser and navigate to `http://localhost:4200`
 
-## Code scaffolding
+## 🏗️ Project Structure
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+src/
+├── app/
+│   ├── common/
+│   │   ├── constants/        # Application constants and enums
+│   │   ├── pipes/           # Custom pipes (price, etc.)
+│   │   └── services/        # Shared services
+│   │
+│   ├── shopping-cart/       # Main feature module
+│   │   ├── cart/           # Shopping cart component
+│   │   ├── categories/     # Category navigation
+│   │   ├── favorites/      # Favorites management
+│   │   ├── footer/        # Application footer
+│   │   ├── header/        # Application header
+│   │   ├── highlights/    # Featured products section
+│   │   ├── modals/        # Dialog components (login, etc.)
+│   │   ├── models/        # Data models and interfaces
+│   │   ├── product-detailed/  # Product details view
+│   │   ├── product-list-item/ # Individual product card
+│   │   ├── products-list/    # Products listing page
+│   │   └── spring-collections/ # Seasonal collections
+│   │
+│   ├── store/              # NgRx state management
+│   │   ├── auth/          # Authentication state
+│   │   └── cart/          # Shopping cart state
+│   │
+│   ├── app.component.*     # Root component
+│   ├── app.module.ts      # Root module
+│   └── app-routing.module.ts # Application routes
+│
+├── assets/                # Static resources
+└── styles/               # Global styles and themes
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🎯 Core Features
 
-```bash
-ng generate --help
-```
+### Shopping Cart
+- Add/remove items
+- Update quantities
+- Clear entire cart
+- Real-time total calculation
+- Persistent cart state
 
-## Building
+### Product Management
+- Category filtering
+- Price range filtering
+- Detailed product views
+- Image galleries
+- Order tracking
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### User Interface
+- Responsive design
+- Toast notifications
+- Loading states
+- Error handling
+- Clean animations

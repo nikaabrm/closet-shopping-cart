@@ -33,7 +33,6 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
       this.store.dispatch(
         AuthActions.login({
           credentials: {
