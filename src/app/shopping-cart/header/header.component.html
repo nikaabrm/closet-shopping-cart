@@ -1,4 +1,4 @@
-<div class="header w-100 bg-white h-60px d-flex">
+<div class="header w-100 bg-white h-60px d-flex border-bottom">
   <div class="col-2">
     <a
       class="btn w-100 h-100 d-flex align-items-center justify-content-center border-0"
@@ -26,24 +26,30 @@
         >Products</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">Details</a>
+        <a class="nav-link"
+        routerLink="detailed"
+        >Detailed</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">Cart</a>
+        <a class="nav-link"
+        routerLink="cart"
+        >Cart</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">Favorites</a>
+        <a class="nav-link"
+        routerLink="favorites"
+        >Favorites</a>
       </li>
     </ul>
   </div>
   <div class="col-2 d-flex align-items-center">
-    <button class="btn">
+    <button class="btn" (click)="openLoginDialog()">
       <strong><i class="bi bi-person fs-5"></i></strong>
     </button>
-    <button class="btn">
+    <button class="btn" routerLink="cart">
       <i class="bi bi-cart fs-5"></i>
     </button>
-    <button class="btn line-h-normal">
+    <button class="btn line-h-normal" routerLink="favorites">
       <i class="bi bi-heart fs-5"></i>
     </button>
   </div>

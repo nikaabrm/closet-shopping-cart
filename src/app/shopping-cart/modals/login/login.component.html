@@ -1,0 +1,24 @@
+
+<form class="login d-flex flex-column align-items-center p-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    
+    <i class="bi bi-handbag fs-2 text-white"></i>
+    <span class="fs-3 text-white">Welcome to CLOSET</span>
+ 
+    <div class="pb-2 pt-4">
+        <label for="userName" class="form-label text-white fs-6">user name</label>
+        <input id="userName" formControlName="userName" type="userName" class="form-control"/>
+        <div *ngIf="loginForm.controls['userName'].invalid && loginForm.controls['userName'].touched">
+        </div>
+      </div>
+  
+      <div class="pb-2">
+        <label for="password" class="form-label fs-6 text-white">Password</label>
+        <input id="password" formControlName="password" type="password" class="form-control"/>
+        <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
+        </div>
+      </div>
+  
+      <button type="submit" class="btn text-info-emphasis bg-white mt-3 px-3" [disabled]="loginForm.invalid">Sign In</button>
+    
+     
+</form>

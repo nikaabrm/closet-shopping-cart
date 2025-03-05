@@ -18,6 +18,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
+import { ProductDetailedComponent } from './product-detailed/product-detailed.component';
+import { CartComponent } from './cart/cart.component';
+import { FavoritesComponent } from './favorites/favorites.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { LoginComponent } from './modals/login/login.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +32,11 @@ import { ProductListItemComponent } from './product-list-item/product-list-item.
     SpringCollectionsComponent,
     FooterComponent,
     ProductsListComponent,
-    ProductListItemComponent
+    ProductListItemComponent,
+    ProductDetailedComponent,
+    CartComponent,
+    FavoritesComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +50,8 @@ import { ProductListItemComponent } from './product-list-item/product-list-item.
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
   ],
   exports: [
     ShoppingCartComponent,

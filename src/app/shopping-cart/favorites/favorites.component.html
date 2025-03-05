@@ -18,8 +18,7 @@
     <div class="pt-5 d-flex flex-column pb-5" >
       <div class="pb-4">Categories</div>
 
-       @for (category of
-      availableCategories; track $index) {
+       @for (category of availableCategories; track $index) {
       <mat-checkbox
         (change)="categoriesChanged($event,category)"
       >

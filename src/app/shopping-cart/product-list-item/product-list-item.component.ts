@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '../models/product.model';
 import { LocalStorageService } from '../../common/services/localstorage.service';
 
@@ -12,6 +12,7 @@ export class ProductListItemComponent implements OnInit{
   constructor(private readonly localsTorageService: LocalStorageService ){}
 
   @Input() product:Product;
+  @Output() productClicked =  new EventEmitter();
 
   isFavorite = false;
   favoritedProducts:number[] | null = []
@@ -37,5 +38,8 @@ export class ProductListItemComponent implements OnInit{
 
     this.localsTorageService.set(this.favoriteProductsKey,modifiedFavoriteProducts);
     // this.isFavorite = !this.isFavorite;
+  }
+  onProductClicked(){
+this.productClicked.emit();
   }
 }

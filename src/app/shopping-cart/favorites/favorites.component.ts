@@ -1,19 +1,19 @@
-import { Component, model, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Options } from '@angular-slider/ngx-slider';
-import { CategoriesService } from '../categories/categories.service';
-import { ProductsListService } from './products-list.service';
-import { GetProductsParams, SortOrder, type Product } from '../models/product.model'
 import { MatPaginator } from '@angular/material/paginator';
+import { GetProductsParams, Product, SortOrder } from '../models/product.model';
+import { CategoriesService } from '../categories/categories.service';
+import { ProductsListService } from '../products-list/products-list.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-products-list',
+  selector: 'app-favorites',
   standalone: false,
-  templateUrl: './products-list.component.html',
-  styleUrl: './products-list.component.scss',
+  templateUrl: './favorites.component.html',
+  styleUrl: './favorites.component.scss'
 })
-export class ProductsListComponent {
-  @ViewChild('paginator') paginator!: MatPaginator
+export class FavoritesComponent {
+ @ViewChild('paginator') paginator!: MatPaginator
   
   sortOptions: { value: string; viewValue: string }[] = [
     { value: 'asc', viewValue: 'Price Up' },
