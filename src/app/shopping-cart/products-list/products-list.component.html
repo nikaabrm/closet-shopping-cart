@@ -2,7 +2,6 @@
   class="col-11 mx-auto py-5 flex-grow-1 d-flex justify-content-between align-items-start"
 >
   <form
-    [formGroup]="productsFilterForm"
     class="d-flex flex-column col-3 bg-light p-3 mt-3 pb-5"
   >
     <span class="pb-2 fs-5">PRICES</span>
@@ -14,20 +13,19 @@
       [(value)]="minPrice"
       [(highValue)]="maxPrice"
       [options]="options"
-      (userChangeEnd)="SliderValueChanged($event)"
+      (userChangeEnd)="priceValuesChanged($event)"
     ></ngx-slider>
-    <div class="pt-5 d-flex flex-column pb-5" formArrayName="categories">
+    <div class="pt-5 d-flex flex-column pb-5" >
       <div class="pb-4">Categories</div>
 
-      @if (categoriesFormGroupControls.length > 2) { @for (category of
-      categoriesFormGroupControls; track $index) {
+       @for (category of
+      availableCategories; track $index) {
       <mat-checkbox
-        (change)="filterByCategory($event)"
-        [formControlName]="category"
+        (change)="categoriesChanged($event,category)"
       >
         {{ category }}
       </mat-checkbox>
-      } }
+      } 
     </div>
   </form>
 
@@ -35,37 +33,26 @@
     <div class="d-flex px-4">
       <mat-form-field>
         <mat-label>Sort By</mat-label>
-        <mat-select>
-          @for (food of foods; track food) {
-          <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+        <mat-select
+        (selectionChange)="sortChanged($event)">
+          @for (sortItem of sortOptions; track sortItem) {
+          <mat-option [value]="sortItem.value">{{ sortItem.viewValue }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div class="d-flex flex-grow-1 w-100 flex-wrap">
-      @for (item of paginatedProducts; track $index) {
-      <div class="product-item col-4 px-4 pb-5">
-        <button class="favorite btn" (click)="Favorite()">
-          <i class="bi bi-heart" *ngIf="isFavorite"></i>
-          <i class="bi bi-heart-fill" *ngIf="!isFavorite"></i>
-        </button>
-        <div class="bg" [ngStyle]="{'background-image': 'url(' + item.image + ')'}"></div>
-        <div class="border w-100 p-3">
-          <div class="fs-7 truncate-2">
-            {{ item.description }}
-          </div>
-          <div class="d-flex justify-content-between pt-2 pb-3">
-            <span>${{item.price}}</span>
-            <span>{{item.rating.count}} Orders</span>
-          </div> 
+    <div class="flex-grow-1 d-flex flex-wrap w-100">
+      @for (item of paginatedProducts; track item.id) {
+        <div class="product-item col-4 px-4 pb-5">
+        <app-product-list-item [product]="item"></app-product-list-item>
         </div>
-      </div>
       }
     </div>
 
     <div class="w-100">
       <mat-paginator
+      #paginator
         [length]="paginatorItemsLength"
         [pageSize]="itemsPerPage"
         (page)="pageChanged($event)"

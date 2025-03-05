@@ -1,15 +1,9 @@
-import { Component, model } from '@angular/core';
+import { Component, model, ViewChild } from '@angular/core';
 import { Options } from '@angular-slider/ngx-slider';
 import { CategoriesService } from '../categories/categories.service';
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  Validators,
-  FormArray,
-  AbstractControl,
-} from '@angular/forms';
 import { ProductsListService } from './products-list.service';
+import { GetProductsParams, SortOrder, type Product } from '../models/product.model'
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-products-list',
@@ -18,61 +12,22 @@ import { ProductsListService } from './products-list.service';
   styleUrl: './products-list.component.scss',
 })
 export class ProductsListComponent {
-  productsFilterForm!: FormGroup;
-  categoriesFormGroupControls: string[] = [];
+  @ViewChild('paginator') paginator!: MatPaginator
+  
+  sortOptions: { value: string; viewValue: string }[] = [
+    { value: 'asc', viewValue: 'Price Up' },
+    { value: 'desc', viewValue: 'Price Down' },
+  ];
+
+
   // Original array of products
-  products: {
-    category: string;
-    description: string;
-    id: number;
-    image: string;
-    price: number;
-    rating: { rate: number; count: number };
-    title: string;
-  }[] = [];
+  products: Product[] = [];
 
-  // filteredProducts aq chemtvis mqodne ssul da fasis shedarebebze aq vyaro da amit mivamarto mere
-  filteredProducts: {
-    category: string;
-    description: string;
-    id: number;
-    image: string;
-    price: number;
-    rating: { rate: number; count: number };
-    title: string;
-  }[] = [];
-
-  filteredProductsByCategory: {
-    category: string;
-    description: string;
-    id: number;
-    image: string;
-    price: number;
-    rating: { rate: number; count: number };
-    title: string;
-  }[] = [];
-
-  filteredProductsByRange: {
-    category: string;
-    description: string;
-    id: number;
-    image: string;
-    price: number;
-    rating: { rate: number; count: number };
-    title: string;
-  }[] = [];
+  filteredProducts: Product[] = [];
 
   // Page products
   // This will be generated dynamically based on page
-  paginatedProducts: {
-    category: string;
-    description: string;
-    id: number;
-    image: string;
-    price: number;
-    rating: { rate: number; count: number };
-    title: string;
-  }[] = [];
+  paginatedProducts: Product[] = [];
 
   // Pagination items, wE do not supports pages
   // And required to do with fetched data
@@ -80,9 +35,10 @@ export class ProductsListComponent {
   currentPage = 1;
   totalPages = 0;
 
-  isFavorite = false;
   minPrice: number = 0;
   maxPrice: number = 1000;
+  selectedCategories:string[] = [];
+  availableCategories:string[] = [];
 
   options: Options = {
     floor: 0,
@@ -92,34 +48,14 @@ export class ProductsListComponent {
   constructor(
     private categoriesService: CategoriesService,
     private productsListService: ProductsListService,
-    private fb: FormBuilder
   ) {
-    this.productsFilterForm = this.fb.group({
-      priceMin: ['', Validators.required],
-      priceMax: ['', Validators.required],
-      categories: this.fb.group({}),
-    });
+   
 
     this.categoriesService.getAllCategories().subscribe((res) => {
-      const categoriesFormGroup = this.productsFilterForm.get(
-        'categories'
-      ) as FormGroup;
-
-      res.forEach((item, i) => {
-        categoriesFormGroup.addControl(item, new FormControl(''));
-      });
-
-      this.categoriesFormGroupControls = Object.keys(
-        categoriesFormGroup.controls
-      );
+      this.availableCategories = res;
     });
 
-    this.productsListService.getAllProducts().subscribe((res) => {
-      this.products = res; // Assuming API returns an array of 20 items
-      this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
-
-      this.updatePagination();
-    });
+    this.loadProducts()
   }
 
   get paginatorItemsLength() {
@@ -128,15 +64,44 @@ export class ProductsListComponent {
       : this.products.length;
   }
 
+  loadProducts(params?:GetProductsParams){
+    this.products = []
+    this.productsListService.getAllProducts(params).subscribe((res) => {
+      this.products = res; 
+      this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
+      this.filterProducts()
+      this.updatePagination();
+    });
+  }
+
+  sortChanged(event:any){
+    const sortOrder = event.value as SortOrder;
+    this.loadProducts({sort:sortOrder})
+  }
+
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const data = this.filteredProducts?.length
       ? this.filteredProducts
       : this.products;
+
     this.paginatedProducts = data.slice(
       startIndex,
       startIndex + this.itemsPerPage
     );
+  }
+
+  resetPagination(){
+    this.paginator.firstPage();
+
+    this.currentPage = 1;
+
+    const data =  this.filteredProducts?.length
+    ? this.filteredProducts
+    : this.products;
+
+    this.totalPages = Math.ceil(data.length / this.itemsPerPage);
+
   }
 
   nextPage() {
@@ -166,69 +131,48 @@ export class ProductsListComponent {
     }
   }
 
-  filterProducts() {
-    
 
-    if (this.filteredProductsByCategory.length) {
-      this.filteredProducts = [];
-      this.filteredProductsByCategory.forEach((item) => {
-        this.filteredProducts.push(item);
-      });
-    }
-    if(this.filteredProductsByRange.length) {
-      this.filteredProducts = [];
-      this.filteredProductsByRange.forEach((item) => {
-        this.filteredProducts.push(item);
-      });
-      console.log(' aqaa fileteredByPriceRange', this.filteredProductsByRange);
-
-    }
-
-    this.updatePagination();
-  }
-
-  SliderValueChanged(event: any) {
+priceValuesChanged(event: any) {
     this.minPrice = event.value;
     this.maxPrice = event.highValue;
-    this.productsFilterForm.controls['priceMin'].setValue(this.minPrice);
-    this.productsFilterForm.controls['priceMax'].setValue(this.maxPrice);
- 
-    this.filteredProductsByRange = this.products.filter(item => item.price >= event.value && item.price <= event.highValue);
-
-    this.filterProducts();
-
-    
+   this.filterProducts()  
   }
 
-  filterByCategory(event: any) {
-    this.filteredProductsByCategory = [];
+  categoriesChanged(event:any,categoryName:string){
+    const categoryItem = this.selectedCategories.find(category => category === categoryName);
 
-    const chosenCategoryNames = Object.entries(
-      this.productsFilterForm.value.categories
-    )
-      .filter(([key, value]) => value)
-      .map(([key]) => key);
+    console.log(categoryItem)
+    if(categoryItem){
+      const categoryIndex = this.selectedCategories.indexOf(categoryName);
+      this.selectedCategories.splice(categoryIndex,1)
+    }else{
+      this.selectedCategories.push(categoryName)
 
-    chosenCategoryNames.forEach((name) => {
-      this.products
-        .filter((item) => item.category === name)
-        .map((item) => {
-          this.filteredProductsByCategory.push(item);
-        });
-    });
+    }
+
 
     this.filterProducts();
   }
 
-  Favorite() {
-    this.isFavorite = !this.isFavorite;
+  filterProducts(){
+    this.paginatedProducts = []
+    this.filteredProducts = [];
+  
+    let products:Product[] =[...this.products];
+
+    if(this.selectedCategories?.length){
+      products = products.filter(product => this.selectedCategories.find(category=> category === product.category))
+    }
+
+    products = products.filter(item => item.price >= this.minPrice && item.price <= this.maxPrice);
+
+    this.filteredProducts = products;
+    this.resetPagination();
+    this.updatePagination();
+
   }
 
-  foods: { value: string; viewValue: string }[] = [
-    { value: 'priceUp', viewValue: 'Price Up' },
-    { value: 'priceDown', viewValue: 'Price Down' },
-  ];
 
-  p: number = 1;
-  collection: any[] = ['1', '232', '23'];
+
+
 }

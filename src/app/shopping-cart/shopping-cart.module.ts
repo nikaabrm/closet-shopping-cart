@@ -17,6 +17,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     HighlightsComponent,
     SpringCollectionsComponent,
     FooterComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    ProductListItemComponent
   ],
   imports: [
     CommonModule,

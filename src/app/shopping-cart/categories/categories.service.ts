@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BaseApiService } from '../../common/services/base-api.service';
 
 @Injectable({
@@ -9,6 +8,6 @@ export class CategoriesService extends BaseApiService<string>{
   private resource = 'products/categories';
    
   getAllCategories() {
-    return this.getCategories(this.resource);
+    return this.getAll<string>(this.resource);
   }
 }
