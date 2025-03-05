@@ -305,21 +305,19 @@ app-cart {
 }
  
 
-.mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
-
+.mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background{
+  border-color: var(--bs-info-text-emphasis) !important;
+  background-color: var(--bs-info-text-emphasis) !important;
 }
-
-.mdc-checkbox__background{
- 
-}
-
-.mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: #005691;
+.mdc-checkbox .mdc-checkbox__native-control:focus:checked+.mdc-checkbox__ripple{
+  background-color: var(--bs-info-text-emphasis) !important;
 }
 
 
 .banner-countdown{
-  .days{
+  .days *{
     width: 30px;
+    max-width: 30px;
+    height: 30px;
   }
 }

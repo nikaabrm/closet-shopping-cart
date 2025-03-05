@@ -27,8 +27,8 @@
           >Products</a
         >
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="cart">Cart</a>
+      <li class="nav-item" *ngIf="isAuthenticated$ | async">
+        <a class="nav-link" routerLink="cart" >Cart</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="favorites">Favorites</a>
@@ -59,7 +59,7 @@
         <ng-container *ngIf="cartItemsCount$ | async as count">
           <span
             *ngIf="count > 0"
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            class="position-absolute mt-2 top-0 start-100 translate-middle badge rounded-pill bg-danger border-0"
           >
             {{ count }}
           </span>
@@ -69,7 +69,6 @@
     <button
       class="btn line-h-normal"
       routerLink="favorites"
-      *ngIf="isAuthenticated$ | async"
     >
       <i class="bi bi-heart fs-5"></i>
     </button>
