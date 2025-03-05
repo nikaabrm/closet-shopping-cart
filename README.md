@@ -47,7 +47,7 @@
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/closet-shopping-cart.git
+git clone https://github.com/nikaabrm/closet-shopping-cart.git
 ```
 
 2. Install dependencies:
