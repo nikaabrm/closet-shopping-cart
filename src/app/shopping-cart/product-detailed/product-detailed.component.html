@@ -1,28 +1,56 @@
-
-<div class="container pt-5 mt-5 d-flex justify-content-center detailed pb-5">
-
-        <div class="col d-flex justify-content-end px-5">
-            <div class="bg" [style.background-image]="'url(' + product.image + ')'"></div>
+<div class="container pt-5 mt-5 detailed pb-5">
+  <div class="w-100  d-flex justify-content-center">
+    <div class="col d-flex justify-content-end px-5">
+      <div
+        class="bg"
+        [style.background-image]="'url(' + product.image + ')'"
+      ></div>
+    </div>
+    <div class="col px-5 d-flex flex-column">
+      <span class="fs-5">{{ product.title }}</span>
+      <span class="text-info-emphasis fs-5 pt-3">${{ product.price }}</span>
+      <span class="text-info-emphasis fs-5 pt-3">{{
+        product.description
+      }}</span>
+      <div class="pt-3 d-flex flex-column text-info-emphasis">
+        <span>Quanitity</span>
+        <div
+          class="d-flex align-items-center justify-content-center border col-2"
+        >
+          <button class="btn border-0" (click)="countIncreased()">+</button>
+          <span class="px-1">{{ count }}</span>
+          <button class="btn border-0" (click)="countDecreased()">-</button>
         </div>
-        <div class="col px-5 d-flex flex-column">
-            <span class="fs-5">{{product.title}}</span>
-            <span class="text-info-emphasis fs-5 pt-3">${{product.price}}</span>
-            <span class="text-info-emphasis fs-5 pt-3">{{product.description}}</span>
-            <div class="pt-3 d-flex flex-column text-info-emphasis">
-                <span>Quanitity</span>
-                <div class="d-flex align-items-center justify-content-center border col-2">
-                    <button class="btn border-0" (click)="countIncreased()">+</button>
-                    <span class="px-1">{{count}}</span>
-                    <button class="btn border-0" (click)="countDecreased()">-</button>
-                </div>
-            </div>
-            <button class="btn border mt-3 rounded d-flex col-7 justify-content-center text-info-emphasis fs-5 p-2">
+      </div>
+      <button
+        class="btn border mt-3 rounded d-flex col-7 justify-content-center text-info-emphasis fs-5 p-2"
+      >
+        <i class="bi bi-cart3 px-3"></i>
+        <span class=""> + </span>
+        <span class="px-1"> Add To Cart </span>
+      </button>
+    </div>
+  </div>
 
-                <i class="bi bi-cart3 px-3"></i> 
-                <span class=""> + </span>
-                <span class="px-1"> Add To Cart </span>
-
-            </button>
-        </div>
+  <div class="text-info-emphasis fs-5">
+    Simliar Products
     
+  <div class="w-100 pt-5">
+    <owl-carousel-o [options]="customOptions">
+      @for(product of products;track $index ){
+
+      <ng-template carouselSlide>
+        <div class="slide d-flex flex-column align-items-center">
+          <div
+            class="bg bg-size-cove bg-cover bg-position-center bg-center"
+            [style.background-image]="'url(' + product.image + ')'"
+          ></div>
+          <div class="text fs-5 text-info-emphasis">{{ product.title }}</div>
+        </div>
+      </ng-template>
+      }
+    </owl-carousel-o>
+  </div>
+
+  </div>
 </div>

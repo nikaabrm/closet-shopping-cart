@@ -10,19 +10,19 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { RouterModule } from '@angular/router';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { ProductDetailedComponent } from './product-detailed/product-detailed.component';
 import { CartComponent } from './cart/cart.component';
 import { FavoritesComponent } from './favorites/favorites.component';
-import {MatDialogModule} from '@angular/material/dialog';
-import { LoginComponent } from './modals/login/login.component'
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoginComponent } from './modals/login/login.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { LoginComponent } from './modals/login/login.component'
     ProductDetailedComponent,
     CartComponent,
     FavoritesComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -51,12 +51,8 @@ import { LoginComponent } from './modals/login/login.component'
     MatSelectModule,
     MatFormFieldModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
   ],
-  exports: [
-    ShoppingCartComponent,
-    HeaderComponent,
-    FooterComponent
-  ]
+  exports: [ShoppingCartComponent, HeaderComponent, FooterComponent],
 })
-export class ShoppingCartModule { }
+export class ShoppingCartModule {}
