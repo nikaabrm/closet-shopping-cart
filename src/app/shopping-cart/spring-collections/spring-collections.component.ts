@@ -7,10 +7,10 @@ import { Component,ElementRef, ViewChild } from '@angular/core';
   styleUrl: './spring-collections.component.scss'
 })
 export class SpringCollectionsComponent {
-  date: any;
-  now: any;
-  targetDate: any = new Date(2025, 5, 20);
-  targetTime: any = this.targetDate.getTime();
+  date: Date;
+  now = 0;
+  targetDate = new Date(2025, 5, 20);
+  targetTime = this.targetDate.getTime();
   difference!: number;
   months: Array<string> = [
     'January',
@@ -26,7 +26,7 @@ export class SpringCollectionsComponent {
     'November',
     'December',
   ];
-  currentTime: any = `${
+  currentTime = `${
     this.months[this.targetDate.getMonth()]
   } ${this.targetDate.getDate()}, ${this.targetDate.getFullYear()}`;
 

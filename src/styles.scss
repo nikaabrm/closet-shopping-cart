@@ -1,3 +1,5 @@
+@use 'ngx-toastr/toastr';
+
 /* You can add global styles to this file, and also import other style files */
 // imports
 
@@ -294,4 +296,11 @@ app-cart {
   }
 }
 
+
+.owl-nav{
+  pointer-events: none;
+  .owl-prev,.owl-next{
+    pointer-events: all;
+  }
+}
  

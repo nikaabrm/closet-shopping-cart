@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class BaseApiService<T> {
+export class BaseApiService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  getAll<T>(endpoint: string,params?:Record<string,any>): Observable<T[]> {
+  get<T>(endpoint: string,params?:Record<string,any>): Observable<T[]> {
 
     let httpParams = new HttpParams();
 
@@ -30,7 +30,7 @@ export class BaseApiService<T> {
     return this.http.get<T>(`${this.apiUrl}/${endpoint}/${id}`);
   }
 
-  create<T>(endpoint: string, item: T): Observable<T> {
+  post<T,P>(endpoint: string, item: P): Observable<T> {
     return this.http.post<T>(`${this.apiUrl}/${endpoint}`, item);
   }
 
@@ -42,5 +42,5 @@ export class BaseApiService<T> {
     return this.http.delete<void>(`${this.apiUrl}/${endpoint}/${id}`);
   }
 
- 
+
 }

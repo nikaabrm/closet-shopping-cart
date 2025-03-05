@@ -18,6 +18,11 @@ export const routes: Routes = [
     pathMatch:'full'
   },
   {
+    path:'products/:category',
+    component: ProductsListComponent,
+    pathMatch:'full'
+  },
+  {
     path:'detailed/:id',
     component: ProductDetailedComponent,
     pathMatch:'full'

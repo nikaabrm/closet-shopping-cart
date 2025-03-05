@@ -4,10 +4,10 @@ import { BaseApiService } from '../../common/services/base-api.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CategoriesService extends BaseApiService<string>{
+export class CategoriesService extends BaseApiService{
   private resource = 'products/categories';
-   
+
   getAllCategories() {
-    return this.getAll<string>(this.resource);
+    return this.get<string>(this.resource);
   }
 }

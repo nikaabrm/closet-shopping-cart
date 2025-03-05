@@ -1,23 +1,60 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { authReducer } from './store/auth/auth.reducer';
+import { cartReducer } from './store/cart/cart.reducer';
+import { AuthEffects } from './store/auth/auth.effects';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
-import { routes } from '../app/app-routing.module';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+
+export function localStorageSyncReducer(reducer: any) {
+  return localStorageSync({
+    keys: ['cart'],
+    rehydrate: true
+  })(reducer);
+}
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatDialogModule,
     ShoppingCartModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      timeOut: 3000,
+      progressBar: true,
+      closeButton: true,
+      newestOnTop: true
+    }),
+    StoreModule.forRoot({
+      auth: authReducer,
+      cart: cartReducer
+    }, {
+      metaReducers: [localStorageSyncReducer]
+    }),
+    EffectsModule.forRoot([AuthEffects])
   ],
-  providers: [provideRouter(routes), provideHttpClient()],
-  bootstrap: [AppComponent],
+  providers: [
+    provideStoreDevtools({ maxAge: 25 })
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

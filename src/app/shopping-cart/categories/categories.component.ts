@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CategoriesService } from './categories.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 export interface PhotosApi {
   albumId?: number;
@@ -14,7 +13,7 @@ export interface PhotosApi {
 
 @Component({
   selector: 'app-categories',
-  imports: [CarouselModule, CommonModule],
+  standalone:false,
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
@@ -45,7 +44,7 @@ export class CategoriesComponent {
     'https://media.burford.co.uk/images/SNY04089.jpg_edit.width-1440_05001m7uKQ0crRoI.jpg',
   ];
 
-  constructor(private categoriesService: CategoriesService) {
+  constructor(private categoriesService: CategoriesService, private router: Router) {
     this.categoriesService.getAllCategories().subscribe((res) => {
       console.log(this.categories.length)
       this.categoryNames = res;
@@ -53,5 +52,9 @@ export class CategoriesComponent {
         this.categories!.push({name: el, photoUrl: this.categoryPhotos[i] });
       });
     });
+  }
+  
+  categoryClicked(category: string){
+    this.router.navigate(['products',category])
   }
 }

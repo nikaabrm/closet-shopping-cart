@@ -37,10 +37,11 @@ import { LoginComponent } from './modals/login/login.component';
     CartComponent,
     FavoritesComponent,
     LoginComponent,
+    LoginComponent,
+    CategoriesComponent,
   ],
   imports: [
     CommonModule,
-    CategoriesComponent,
     CarouselModule,
     RouterModule,
     NgxSliderModule,

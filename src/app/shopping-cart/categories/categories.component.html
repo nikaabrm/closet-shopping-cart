@@ -3,10 +3,10 @@
 
   <div class="w-100 pt-5">
     <owl-carousel-o [options]="customOptions">
-      @for(category of categories;track $index ){
+      @for(category of categories; track $index){
 
       <ng-template carouselSlide>
-        <div class="slide d-flex flex-column align-items-center">
+        <div class="slide d-flex flex-column align-items-center cursor-pointer" (click)="categoryClicked(category.name)">
           <div
             class="bg bg-size-cove bg-cover bg-position-center bg-center"
             [style.background-image]="'url(' + category.photoUrl + ')'"
@@ -14,6 +14,7 @@
           <div class="text fs-5 text-info-emphasis">{{ category.name }}</div>
         </div>
       </ng-template>
+
       }
     </owl-carousel-o>
   </div>

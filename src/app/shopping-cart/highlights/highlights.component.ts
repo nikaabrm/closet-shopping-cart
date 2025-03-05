@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-highlights',
   standalone: false,
   templateUrl: './highlights.component.html',
-  styleUrl: './highlights.component.scss'
+  styleUrl: './highlights.component.scss',
 })
-export class HighlightsComponent {
-
-}
+export class HighlightsComponent {}

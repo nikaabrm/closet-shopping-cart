@@ -5,7 +5,7 @@ import { Product } from '../models/product.model';
 @Injectable({
   providedIn: 'root',
 })
-export class ProductDetailedService extends BaseApiService<Product> {
+export class ProductDetailedService extends BaseApiService {
   private resource = 'products';
 
   getProductById(id: string) {

@@ -4,11 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-shopping-cart',
   standalone: false,
   templateUrl: './shopping-cart.component.html',
-  styleUrl: './shopping-cart.component.scss'
+  styleUrl: './shopping-cart.component.scss',
 })
-export class ShoppingCartComponent {
-
-
-
-
-}
+export class ShoppingCartComponent {}

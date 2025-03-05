@@ -20,35 +20,57 @@
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link"
-        routerLink="products"
-        [routerLinkActive]="['active']"
-        >Products</a>
+        <a
+          class="nav-link"
+          routerLink="products"
+          [routerLinkActive]="['active']"
+          >Products</a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link"
-        >Detailed</a>
+        <a class="nav-link" routerLink="cart">Cart</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"
-        routerLink="cart"
-        >Cart</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"
-        routerLink="favorites"
-        >Favorites</a>
+        <a class="nav-link" routerLink="favorites">Favorites</a>
       </li>
     </ul>
   </div>
   <div class="col-2 d-flex align-items-center">
-    <button class="btn" (click)="openLoginDialog()">
-      <strong><i class="bi bi-person fs-5"></i></strong>
-    </button>
-    <button class="btn" routerLink="cart">
-      <i class="bi bi-cart fs-5"></i>
-    </button>
-    <button class="btn line-h-normal" routerLink="favorites">
+    <div class="d-flex align-items-center">
+      <ng-container *ngIf="isAuthenticated$ | async; else loginButton">
+        <div class="d-flex align-items-center">
+          <button class="btn" (click)="logout()" title="Logout">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
+          <span class="text-info-emphasis ms-2">{{
+            (user$ | async)?.name
+          }}</span>
+        </div>
+      </ng-container>
+      <ng-template #loginButton>
+        <button class="btn" (click)="openLoginDialog()" title="Login">
+          <i class="bi bi-person fs-5"></i>
+        </button>
+      </ng-template>
+    </div>
+    <div class="position-relative">
+      <button class="btn" routerLink="cart">
+        <i class="bi bi-cart fs-5"></i>
+        <ng-container *ngIf="cartItemsCount$ | async as count">
+          <span
+            *ngIf="count > 0"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
+            {{ count }}
+          </span>
+        </ng-container>
+      </button>
+    </div>
+    <button
+      class="btn line-h-normal"
+      routerLink="favorites"
+      *ngIf="isAuthenticated$ | async"
+    >
       <i class="bi bi-heart fs-5"></i>
     </button>
   </div>

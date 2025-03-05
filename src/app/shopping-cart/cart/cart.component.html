@@ -1,27 +1,36 @@
-
 <div class="col-8 d-flex flex-column cart mx-auto py-5">
-    <div class="w-100 border-bottom d-flex align-items-center pb-4">
-        <div class="bg" [style.background-image]="'url(' + photoUrl + ')'">
-
-        </div>
-        <div class="px-4 col-2 fs-5 text-info-emphasis d-flex flex-column align-items-center">
-            <span class="pb-4">Name</span>
-            <span>$23</span>
-        </div>
-        <div class="col-6 pt-3 d-flex flex-column text-info-emphasis">
-            <span class="pb-4">Quanitity</span>
-            <div class="d-flex align-items-center justify-content-center border col-2">
-                <button class="btn border-0" (click)="countIncreased()">+</button>
-                <span class="px-1 fs-5">{{count}}</span>
-                <button class="btn border-0" (click)="countDecreased()">-</button>
+    <ng-container *ngIf="cartItems$ | async as cartItems">
+        <div *ngFor="let item of cartItems" class="w-100 border-bottom d-flex align-items-center pb-4 mb-4">
+            <div class="bg" [style.background-image]="'url(' + item.product.image + ')'">
+            </div>
+            <div class="px-4 col-2 fs-5 text-info-emphasis d-flex flex-column align-items-center">
+                <span class="pb-4">{{item.product.title}}</span>
+                <span>${{item.product.price}}</span>
+            </div>
+            <div class="col-6 pt-3 d-flex flex-column text-info-emphasis">
+                <span class="pb-4">Quantity</span>
+                <div class="d-flex align-items-center justify-content-center border col-2">
+                    <button class="btn border-0" (click)="updateQuantity(item.product.id, item.quantity + 1)">+</button>
+                    <span class="px-1 fs-5">{{item.quantity}}</span>
+                    <button class="btn border-0" (click)="updateQuantity(item.product.id, item.quantity - 1)">-</button>
+                </div>
+                <button class="btn btn-danger mt-3" (click)="removeFromCart(item.product.id)">Remove</button>
+            </div>
+            <div class="col-2 text-end">
+                <span class="fs-5">${{item.product.price * item.quantity}}</span>
             </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-between pt-4">
-        <div class="fs-4 text-info-emphasis">
-            <span>Total:</span> <span class="px-3">$98</span>
+
+        <div class="d-flex justify-content-between pt-4" *ngIf="cartItems.length > 0">
+            <div class="fs-4 text-info-emphasis">
+                <span>Total:</span> <span class="px-3">${{cartTotal$ | async}}</span>
+            </div>
+            <button class="btn btn-secondary text-white px-5">Check Out</button>
         </div>
-        <button class="btn btn-secondary text-white px-5 mt-5">Check Out</button>
-        
-    </div>
+
+        <div *ngIf="cartItems.length === 0" class="text-center py-5">
+            <h3>Your cart is empty</h3>
+            <button class="btn btn-primary mt-3" routerLink="/products">Continue Shopping</button>
+        </div>
+    </ng-container>
 </div>

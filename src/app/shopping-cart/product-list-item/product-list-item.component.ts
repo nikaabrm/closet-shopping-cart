@@ -7,40 +7,45 @@ import { FAVORITE_STORAGE_KEY } from '../../common/constants/localstorage.consta
   selector: 'app-product-list-item',
   standalone: false,
   templateUrl: './product-list-item.component.html',
-  styleUrl: './product-list-item.component.scss'
+  styleUrl: './product-list-item.component.scss',
 })
-export class ProductListItemComponent implements OnInit{
-  constructor(private readonly localsTorageService: LocalStorageService ){}
+export class ProductListItemComponent implements OnInit {
+  constructor(private readonly localsTorageService: LocalStorageService) {}
 
-  @Input() product:Product;
-  @Output() productClicked =  new EventEmitter();
-  @Output() favoriteRemoved =  new EventEmitter<number>();
+  @Input() product: Product;
+  @Output() productClicked = new EventEmitter();
+  @Output() favoriteRemoved = new EventEmitter<number>();
 
   isFavorite = false;
-  favoritedProducts:number[] | null = []
-  
+  favoritedProducts: number[] | null = [];
 
   ngOnInit(): void {
     this.favoritedProducts = this.localsTorageService.get(FAVORITE_STORAGE_KEY);
-    this.isFavorite = this.favoritedProducts?.includes(this.product.id) ||false;
-      
+    this.isFavorite =
+      this.favoritedProducts?.includes(this.product.id) || false;
   }
   toggleFavorite() {
-    let modifiedFavoriteProducts:number[] = [...(this.favoritedProducts || [])]
-    if(this.isFavorite){
+    let modifiedFavoriteProducts: number[] = [
+      ...(this.favoritedProducts || []),
+    ];
+    if (this.isFavorite) {
       const favoriteIndex = modifiedFavoriteProducts.indexOf(this.product.id);
-      modifiedFavoriteProducts.splice(favoriteIndex,1);
+      modifiedFavoriteProducts.splice(favoriteIndex, 1);
       this.favoriteRemoved.emit(this.product.id);
-    }else{
+    } else {
       modifiedFavoriteProducts.push(this.product.id);
     }
 
     this.favoritedProducts = modifiedFavoriteProducts;
-    this.isFavorite = this.favoritedProducts?.includes(this.product.id) ||false;
+    this.isFavorite =
+      this.favoritedProducts?.includes(this.product.id) || false;
 
-    this.localsTorageService.set(FAVORITE_STORAGE_KEY,modifiedFavoriteProducts);
+    this.localsTorageService.set(
+      FAVORITE_STORAGE_KEY,
+      modifiedFavoriteProducts
+    );
   }
-  onProductClicked(){
-this.productClicked.emit();
+  onProductClicked() {
+    this.productClicked.emit();
   }
 }
